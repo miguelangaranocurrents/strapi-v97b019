@@ -187,9 +187,12 @@ const PopoverImpl = ({ zIndex }: { zIndex?: number }) => {
   }
 
   const handleSubmit = (data: FilterFormData) => {
-    const value = FILTERS_WITH_NO_VALUE.includes(data.filter) ? 'true' : (data.value ?? '');
+    const selectedOption = options.find((filter) => filter.name === data.name);
+    const isBoolean = (selectedOption?.mainField?.type ?? selectedOption?.type) === 'boolean';
+    const rawValue = data.value ?? (isBoolean ? 'false' : '');
+    const value = FILTERS_WITH_NO_VALUE.includes(data.filter) ? 'true' : String(rawValue);
 
-    if (!value) {
+    if (value === '') {
       return;
     }
 

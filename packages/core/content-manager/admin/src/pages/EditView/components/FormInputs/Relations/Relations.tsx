@@ -798,7 +798,8 @@ const RelationModalWithContext = ({
           hasMoreItems={hasNextPage}
           loading={isLoadingSearchRelations || isLoadingPermissions}
           onOpenChange={() => {
-            handleSearch(textValue ?? '');
+            // The text value may still hold the label of the option just selected; reset the search
+            handleSearch('');
           }}
           noOptionsMessage={() =>
             formatMessage({
